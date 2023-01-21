@@ -45,4 +45,6 @@
     </string>
     <string name="search_button">Search</string>
     <string name="photo_image_description">Photo</string>
+    <string name="photo_feed_hint">Search Photos</string>
+    <string name="empty_text">not found</string>
 </resources>

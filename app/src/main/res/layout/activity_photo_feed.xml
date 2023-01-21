@@ -18,7 +18,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:background="@color/content" />
+            android:paddingVertical="4dp"
+            android:paddingHorizontal="8dp"
+            tools:background="@color/content"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:hint="@string/photo_feed_hint"
+            android:textColorHint="@color/sub_text"/>
 
         <Button
             android:id="@+id/search_button"
@@ -26,14 +33,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/search_button"
-            android:textColor="@color/text" />
+            android:textColor="@color/text"
+            android:backgroundTint="@color/button" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photo_feed_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:paddingHorizontal="12dp"/>
 
 </LinearLayout>
