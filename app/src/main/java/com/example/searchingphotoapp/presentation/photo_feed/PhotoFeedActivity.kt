@@ -9,9 +9,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.searchingphotoapp.R
 import com.example.searchingphotoapp.databinding.ActivityPhotoFeedBinding
 import com.example.searchingphotoapp.repository.Photo
+import com.example.searchingphotoapp.repository.PhotoRepository
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 interface PhotoFeedViewInput {
     fun setPhotoFeed(photoList: MutableList<Photo>, isAdditional: Boolean)
+    fun showError(message: String?)
 }
 
 class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
@@ -30,7 +36,7 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
         binding = ActivityPhotoFeedBinding.inflate(LayoutInflater.from(this), null, false)
         setContentView(binding.root)
 
-        presenter = PhotoFeedPresenter(this)
+        presenter = PhotoFeedPresenter(this, PhotoRepository())
 
         setupLayout()
         setCallbacks()
@@ -59,6 +65,13 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
         }
     }
 
+    override fun showError(message: String?) {
+        message?.let {
+            Snackbar.make(binding.photoFeedRecyclerView,
+                it, Snackbar.LENGTH_SHORT)
+        }?.show()
+    }
+
     //endregion
 
 
@@ -70,8 +83,7 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
 
     private fun setCallbacks() {
         binding.searchButton.setOnClickListener {
-            presenter.fetchFeed()
-            closeKeyboard()
+            search()
         }
 
         binding.searchEditText.setOnEditorActionListener { textView, i, keyEvent ->
@@ -79,8 +91,7 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
             if (searchText.isNullOrBlank()) {
                 false
             } else {
-                presenter.fetchFeed()
-                closeKeyboard()
+                search()
                 true
             }
         }
@@ -89,6 +100,17 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
     private fun closeKeyboard() {
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun search() {
+        val searchWord = binding.searchEditText.text
+        searchWord?.let {
+            GlobalScope.launch {
+                presenter.fetchFeed(it.toString())
+                closeKeyboard()
+            }
+        }
     }
 
     //endregion
