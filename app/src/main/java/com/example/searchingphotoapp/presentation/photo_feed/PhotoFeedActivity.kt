@@ -59,7 +59,7 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
             binding.photoFeedRecyclerView.layoutManager = if (photoList.isEmpty()) {
                 GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             } else {
-                GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, true)
+                GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
             }
             binding.photoFeedRecyclerView.adapter = adapter
         }

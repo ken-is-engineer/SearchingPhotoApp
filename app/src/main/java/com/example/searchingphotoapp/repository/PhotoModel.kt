@@ -1,11 +1,13 @@
 package com.example.searchingphotoapp.repository
 
 data class PhotoFeed(
-    val items: MutableList<Photo>
+    val photos: MutableList<Photo>
 )
 
 data class Photo(
     val id: Int,
-    val url: String,
+    val src: Src,
     val photographer: String
 )
+
+data class Src(val original: String)

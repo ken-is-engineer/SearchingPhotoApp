@@ -17,12 +17,14 @@ class PhotoFeedPresenter(private val viewInput: PhotoFeedViewInput, private val 
         val result = withContext(Dispatchers.Default) {
             photoRepository.fetchPhotoFeed(searchWord, page)
         }
-        when (result) {
-            is Result.Success -> {
-                viewInput.setPhotoFeed(result.data.items, isAdditional)
-            }
-            is Result.Error -> {
-                viewInput.showError(result.exception.message)
+        withContext(Dispatchers.Main) {
+            when (result) {
+                is Result.Success -> {
+                    viewInput.setPhotoFeed(result.data.photos, isAdditional)
+                }
+                is Result.Error -> {
+                    viewInput.showError(result.exception.message)
+                }
             }
         }
     }

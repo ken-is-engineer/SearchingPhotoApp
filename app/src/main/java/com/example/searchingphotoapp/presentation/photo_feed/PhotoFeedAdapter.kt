@@ -10,7 +10,7 @@ import com.example.searchingphotoapp.databinding.ListItemEmptyBinding
 import com.example.searchingphotoapp.databinding.ListItemPhotoBinding
 import com.example.searchingphotoapp.repository.Photo
 
-class PhotoFeedAdapter(private val viewInput: PhotoFeedViewInput, val photoList: MutableList<Photo>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PhotoFeedAdapter(viewInput: PhotoFeedViewInput, private val photoList: MutableList<Photo>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val context: Context = viewInput as Activity
 
@@ -47,7 +47,9 @@ class PhotoFeedAdapter(private val viewInput: PhotoFeedViewInput, val photoList:
         when (holder) {
             is PhotoViewHolder -> {
                 val item = photoList[position]
-                holder.binding.photoImage.load(item.url)
+                holder.binding.photoImage.load(item.src.original) {
+                    crossfade(true)
+                }
                 holder.binding.nameText.text = item.photographer
             }
             else -> {}

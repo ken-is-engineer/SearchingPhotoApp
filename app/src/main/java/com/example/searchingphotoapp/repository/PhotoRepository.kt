@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
@@ -23,20 +24,22 @@ class PhotoRepository : PhotoRepositoryInterface {
 
     override fun fetchPhotoFeed(searchWord: String, page: Int): Result<PhotoFeed> {
         return try {
-            val builder = OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor(HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BODY
-                })
-            val client = builder.build()
-            val url = URL("https://api.pexels.com/v1/search?query=$searchWord&per_page=$perPage&page=$page")
-            val request = Request.Builder().addHeader("Authorization", apiKey).url(url).build()
-            val response = client.newCall(request).execute()
-            Result.Success(Gson().fromJson(response.body?.toString(), PhotoFeed::class.java))
+        val builder = OkHttpClient.Builder()
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+        val client = builder.build()
+        val url =
+            URL("https://api.pexels.com/v1/search?query=$searchWord&per_page=$perPage&page=$page")
+        val request = Request.Builder().addHeader("Authorization", apiKey).url(url).build()
+        val response = client.newCall(request).execute()
+        val json = JSONObject(response.body!!.string())
+        Result.Success(Gson().fromJson(json.toString(), PhotoFeed::class.java))
         } catch (e: Exception) {
-            Result.Error(Exception("HTTP Request Error"))
+            Result.Error(e)
         }
 
     }
