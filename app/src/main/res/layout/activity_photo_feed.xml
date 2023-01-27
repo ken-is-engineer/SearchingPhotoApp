@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,34 +16,38 @@
 
         <EditText
             android:id="@+id/search_edit_text"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingVertical="4dp"
-            android:paddingHorizontal="8dp"
-            tools:background="@color/content"
+            android:layout_alignTop="@id/search_button"
+            android:layout_alignBottom="@id/search_button"
+            android:layout_toStartOf="@id/search_button"
+            android:hint="@string/photo_feed_hint"
+            android:imeOptions="actionSearch"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:imeOptions="actionSearch"
-            android:hint="@string/photo_feed_hint"
-            android:textColorHint="@color/sub_text"/>
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:textColor="@color/text"
+            android:textColorHint="@color/sub_text"
+            tools:background="@color/content" />
 
         <Button
             android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
+            android:backgroundTint="@color/button"
             android:text="@string/search_button"
-            android:textColor="@color/text"
-            android:backgroundTint="@color/button" />
+            android:textColor="@color/sub_text" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photo_feed_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingHorizontal="12dp"/>
+        android:paddingHorizontal="12dp" />
 
 </LinearLayout>

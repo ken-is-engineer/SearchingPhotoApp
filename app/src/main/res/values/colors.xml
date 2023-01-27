@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#F2F2FB</color>
-    <color name="content">#33000000</color>
-    <color name="text">#3B3B3B</color>
-    <color name="sub_text">#888888</color>
-    <color name="button">#888888</color>
+    <color name="background">#00635A</color>
+    <color name="content">#6600E3CC</color>
+    <color name="text">#44E3D3</color>
+    <color name="sub_text">#00635A</color>
+    <color name="button">#32A89C</color>
 </resources>

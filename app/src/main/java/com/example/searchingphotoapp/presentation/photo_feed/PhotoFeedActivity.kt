@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.searchingphotoapp.R
+import com.example.searchingphotoapp.core.CustomDrawable
 import com.example.searchingphotoapp.databinding.ActivityPhotoFeedBinding
 import com.example.searchingphotoapp.repository.Photo
 import com.example.searchingphotoapp.repository.PhotoRepository
@@ -86,6 +87,8 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
 
     private fun setupLayout() {
         binding.root.setBackgroundColor(ContextCompat.getColor(this, R.color.background))
+        binding.searchEditText.background = CustomDrawable.setEditableBackground(this)
+        binding.searchButton.background = CustomDrawable.setButtonBackground(this)
     }
 
     private fun setCallbacks() {
