@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 
 interface PhotoFeedViewInput {
     fun setPhotoFeed(photoList: MutableList<Photo>, isAdditional: Boolean)
+    fun showPhotoDetail(photo: Photo)
     fun showError(message: String?)
 }
 
@@ -24,6 +25,7 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
 
     private lateinit var binding: ActivityPhotoFeedBinding
     private lateinit var presenter: PhotoFeedPresenterInterface
+    private lateinit var router: PhotoFeedRouterInterface
     private var adapter: PhotoFeedAdapter? = null
     private val photoList: MutableList<Photo> = mutableListOf()
 
@@ -37,6 +39,7 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
         setContentView(binding.root)
 
         presenter = PhotoFeedPresenter(this, PhotoRepository())
+        router = PhotoFeedRouter()
 
         setupLayout()
         setCallbacks()
@@ -63,6 +66,10 @@ class PhotoFeedActivity: Activity(), PhotoFeedViewInput {
             }
             binding.photoFeedRecyclerView.adapter = adapter
         }
+    }
+
+    override fun showPhotoDetail(photo: Photo) {
+        router.showPhotoDetail(this, photo)
     }
 
     override fun showError(message: String?) {

@@ -1,14 +1,16 @@
 package com.example.searchingphotoapp.presentation.photo_feed
 
 import android.content.Context
+import com.example.searchingphotoapp.presentation.photo_detail.PhotoDetailBuilder
+import com.example.searchingphotoapp.repository.Photo
 
 interface PhotoFeedRouterInterface {
-    fun showDetail(context: Context, imageUrl: String)
+    fun showPhotoDetail(context: Context, photo: Photo)
 }
 
 class PhotoFeedRouter: PhotoFeedRouterInterface {
-    override fun showDetail(context: Context, imageUrl: String) {
-        TODO("Not yet implemented")
+    override fun showPhotoDetail(context: Context, photo: Photo) {
+        val intent = PhotoDetailBuilder().build(context, photo)
+        context.startActivity(intent)
     }
-
 }

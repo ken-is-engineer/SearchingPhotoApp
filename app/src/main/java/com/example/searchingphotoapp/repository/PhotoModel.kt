@@ -8,6 +8,6 @@ data class Photo(
     val id: Int,
     val src: Src,
     val photographer: String
-)
+): java.io.Serializable
 
-data class Src(val original: String)
+data class Src(val original: String): java.io.Serializable

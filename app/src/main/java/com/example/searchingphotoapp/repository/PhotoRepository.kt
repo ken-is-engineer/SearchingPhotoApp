@@ -30,7 +30,7 @@ class PhotoRepository : PhotoRepositoryInterface {
                 level = HttpLoggingInterceptor.Level.BODY
             })
         val client = builder.build()
-        val url = URL("${Constants.baseUrl}+${Constants.searchApi}?query=$searchWord&per_page=${Constants.perPage}&page=$page")
+        val url = URL("${Constants.baseUrl}${Constants.searchApi}?query=$searchWord&per_page=${Constants.perPage}&page=$page")
         val request = Request.Builder().addHeader(Constants.apiAuthorization, Constants.apiKey).url(url).build()
         val response = client.newCall(request).execute()
         val json = JSONObject(response.body!!.string())
