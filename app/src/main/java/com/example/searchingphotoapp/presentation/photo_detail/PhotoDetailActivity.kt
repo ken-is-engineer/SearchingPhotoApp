@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import coil.load
+import com.example.searchingphotoapp.core.CustomDrawable
 import com.example.searchingphotoapp.core.Keys
 import com.example.searchingphotoapp.databinding.ActivityPhotoDetailBinding
 import com.example.searchingphotoapp.repository.Photo
@@ -25,5 +26,9 @@ class PhotoDetailActivity : Activity() {
         binding = ActivityPhotoDetailBinding.inflate(LayoutInflater.from(this), null, false)
         setContentView(binding.root)
         binding.photoImage.load(photo?.src?.original)
+        binding.closeButton.background = CustomDrawable.setButtonBackground(this)
+        binding.closeButton.setOnClickListener {
+            finish()
+        }
     }
 }
