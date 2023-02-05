@@ -5,4 +5,6 @@
     <color name="text">#44E3D3</color>
     <color name="sub_text">#00635A</color>
     <color name="button">#32A89C</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
 </resources>
