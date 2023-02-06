@@ -10,4 +10,4 @@ data class Photo(
     val photographer: String
 ): java.io.Serializable
 
-data class Src(val original: String): java.io.Serializable
+data class Src(val original: String, val small: String): java.io.Serializable
