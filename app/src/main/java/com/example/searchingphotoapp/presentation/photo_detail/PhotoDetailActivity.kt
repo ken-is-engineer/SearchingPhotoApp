@@ -12,11 +12,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.searchingphotoapp.R
@@ -52,14 +52,15 @@ class PhotoDetailActivity : ComponentActivity() {
     @Composable
     private fun CloseButton() {
         Box(
-            modifier = Modifier.fillMaxWidth()
-                .padding(8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(id = R.dimen.padding_default))
         ) {
             OutlinedButton(
                 colors = ButtonDefaults.outlinedButtonColors(
-                    backgroundColor = Color.Transparent
+                    backgroundColor = colorResource(id = R.color.transparent)
                 ),
-                border = BorderStroke(1.dp, Color.LightGray),
+                border = BorderStroke(dimensionResource(id = R.dimen.border_default), color = colorResource(id = R.color.text)),
                 onClick = {
                     finish()
                 },
@@ -67,7 +68,7 @@ class PhotoDetailActivity : ComponentActivity() {
             ) {
                 Text(
                     text = getString(R.string.close),
-                    color = Color.White
+                    color = colorResource(id = R.color.text)
                 )
             }
         }

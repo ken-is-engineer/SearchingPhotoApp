@@ -22,17 +22,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -126,8 +127,8 @@ class PhotoFeedActivity : ComponentActivity(), PhotoFeedViewInput {
     fun SearchLayout() {
         Row(
             modifier = Modifier
-                .background(Color.Black)
-                .padding(12.dp)
+                .background(color = colorResource(id = R.color.background))
+                .padding(dimensionResource(id = R.dimen.padding_wide))
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -145,13 +146,17 @@ class PhotoFeedActivity : ComponentActivity(), PhotoFeedViewInput {
         OutlinedTextField(
             value = text,
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = Color.White,
-                backgroundColor = Color.Black,
-                placeholderColor = Color.LightGray,
-                unfocusedBorderColor = Color.LightGray,
-                focusedBorderColor = Color.Green,
-                cursorColor = Color.Green
+                textColor = colorResource(id = R.color.text),
+                backgroundColor = colorResource(id = R.color.transparent),
+                unfocusedBorderColor = colorResource(id = R.color.text),
+                focusedBorderColor = colorResource(id = R.color.text),
+                cursorColor = colorResource(id = R.color.text)
             ),
+            placeholder = {
+                Text(
+                    text = stringResource(id = R.string.photo_feed_hint),
+                color = colorResource(id = R.color.sub_text))
+            },
             singleLine = true,
             onValueChange = { value ->
                 searchValue = value
@@ -177,9 +182,9 @@ class PhotoFeedActivity : ComponentActivity(), PhotoFeedViewInput {
         val focusManager = LocalFocusManager.current
         OutlinedButton(
             colors = ButtonDefaults.outlinedButtonColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = colorResource(id = R.color.transparent)
             ),
-            border = BorderStroke(1.dp, Color.LightGray),
+            border = BorderStroke(dimensionResource(id = R.dimen.border_wide), color = colorResource(id = R.color.text)),
             onClick = {
                 keyboardController?.hide()
                 focusManager.clearFocus()
@@ -188,7 +193,7 @@ class PhotoFeedActivity : ComponentActivity(), PhotoFeedViewInput {
         ) {
             Text(
                 text = getString(R.string.search_button),
-                color = Color.White
+                color = colorResource(id = R.color.text)
             )
         }
     }
@@ -198,7 +203,7 @@ class PhotoFeedActivity : ComponentActivity(), PhotoFeedViewInput {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier
-                .background(Color.Black)
+                .background(color = colorResource(id = R.color.background))
                 .fillMaxSize()
         ) {
             if (stateList.isNotEmpty()) {
@@ -216,13 +221,13 @@ class PhotoFeedActivity : ComponentActivity(), PhotoFeedViewInput {
 
     @Composable
     private fun ListItem(item: Photo) {
-        val paddingDp = 8.dp
         Column(
-            Modifier.padding(paddingDp)
+            Modifier
+                .padding(dimensionResource(id = R.dimen.padding_default))
                 .clickable { router.showPhotoDetail(this, item) }
         ) {
             BoxWithConstraints {
-                val itemWidth = maxWidth - paddingDp
+                val itemWidth = maxWidth - dimensionResource(id = R.dimen.padding_default)
                 AsyncImage(
                     ImageRequest.Builder(LocalContext.current)
                         .data(item.src.small)
@@ -237,8 +242,8 @@ class PhotoFeedActivity : ComponentActivity(), PhotoFeedViewInput {
                 )
             }
             Text(
-                text = item.photographer,
-                style = TextStyle(fontSize = 16.sp, color = Color.White),
+                text = stringResource(id = R.string.photo_feed_photographer).format(item.photographer),
+                style = TextStyle(fontSize = 16.sp, color = colorResource(id = R.color.text)),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -247,17 +252,20 @@ class PhotoFeedActivity : ComponentActivity(), PhotoFeedViewInput {
 
     @Composable
     fun PlusImage() {
-        val paddingDp = 8.dp
         BoxWithConstraints(
-            Modifier.padding(paddingDp * 6)
+            Modifier
+                .padding(dimensionResource(id = R.dimen.padding_default) * 6)
                 .clickable { search(true) }
         ) {
-            val itemWidth = maxWidth - paddingDp
+            val itemWidth = maxWidth - dimensionResource(id = R.dimen.padding_default)
             Image(
                 painter = painterResource(id = R.drawable.ic_plus),
+                colorFilter = ColorFilter.tint(colorResource(id = R.color.content)),
                 contentDescription = getString(R.string.photo_image_description),
                 alignment = Alignment.Center,
-                modifier = Modifier.fillMaxWidth().height(itemWidth)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(itemWidth)
             )
         }
     }
