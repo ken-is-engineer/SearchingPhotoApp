@@ -35,13 +35,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.searchingphotoapp.core.Constants
 import com.example.searchingphotoapp.repository.Photo
-import com.example.searchingphotoapp.view_model.photo_feed.PhotosViewModel
 import com.example.searchingphotoapp.view_model.photo_feed.SearchWordViewModel
 
 
 class PhotoFeedLayout(
-    private val searchWordViewModel: SearchWordViewModel,
-    private val photosViewModel: PhotosViewModel
+    private val searchWordViewModel: SearchWordViewModel
 ) {
 
     enum class EventType {

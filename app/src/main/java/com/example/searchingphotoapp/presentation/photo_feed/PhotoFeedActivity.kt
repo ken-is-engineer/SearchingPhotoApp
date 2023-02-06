@@ -84,7 +84,7 @@ class PhotoFeedActivity : ComponentActivity(), PhotoFeedViewInput {
 
     @Composable
     fun ContainerLayout() {
-        val layout = PhotoFeedLayout(searchWordViewModel, photosViewModel)
+        val layout = PhotoFeedLayout(searchWordViewModel)
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
